@@ -4,6 +4,8 @@ const roleRoutes = require('./role.route');
 const accountRoutes = require('./account.route');
 const authRoutes = require('./auth.route');
 const recycleRoutes = require('./recycle.route');
+const myAccountRoutes = require('./my-account.route');
+
 const productCategoryRoutes = require('./products-category.route');
 const systemConfig = require('../../config/system');
 
@@ -19,6 +21,8 @@ module.exports = (app) => {
   app.use(`${PATH_ADMIN}/products`, middleware.requireAuth, productRoutes);
   app.use(`${PATH_ADMIN}/roles`, middleware.requireAuth, roleRoutes);
   app.use(`${PATH_ADMIN}/accounts`, middleware.requireAuth, accountRoutes);
+  app.use(`${PATH_ADMIN}/my-account`, middleware.requireAuth, myAccountRoutes);
+
   app.use(`${PATH_ADMIN}/auth`, authRoutes);
 
 
