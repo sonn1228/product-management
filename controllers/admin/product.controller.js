@@ -43,7 +43,15 @@ module.exports.index = async (req, res) => {
         _id: product.createdBy.account_id
       })
       if (user) {
-        product.createdBy.creator = user.fullName;
+        product.createdBy.fullName = user.fullName;
+      }
+
+      const updatedBy = product.updatedBy.slice(-1)[0];
+      if (updatedBy) {
+        const updater = await Account.findOne({
+          _id: updatedBy.account_id
+        })
+        updatedBy.fullName = updater.fullName;
       }
     }
 
@@ -96,7 +104,10 @@ module.exports.changeStatus = async (req, res) => {
   await Product.updateOne({ _id: id }, {
     status: status,
     $push: {
-      updateBy: updateBy
+      updatedBy: {
+        account_id: res.locals.user.id,
+        updatedAt: new Date()
+      }
     }
   });
   res.redirect('back');
@@ -107,26 +118,32 @@ module.exports.changeMulti = async (req, res) => {
   try {
     const action = req.body.action;
     const ids = req.body.ids.split(', ');
+    const updatedBy = {
+      account_id: res.locals.user.id,
+      updatedAt: new Date()
+    }
     switch (action) {
       case 'active':
         await Product.updateMany({ _id: ids }, {
           status: 'active',
           $push: {
-            updateBy: updateBy
+            updatedBy: updatedBy
           }
         })
         break;
       case 'inactive':
         await Product.updateMany({ _id: ids }, {
-          status: 'inactive'
+          status: 'inactive',
+          $push: {
+            updatedBy: updatedBy
+          }
         })
         break;
       case 'delete':
         await Product.updateMany({ _id: ids }, {
           deleted: true,
-          deletedBy: {
-            account_id: res.locals.user.id,
-            deletedAt: new Date()
+          $push: {
+            updatedBy: updatedBy
           }
         })
         break;
@@ -136,7 +153,7 @@ module.exports.changeMulti = async (req, res) => {
           await Product.updateOne({ _id: id }, {
             position: position,
             $push: {
-              updateBy: updateBy
+              updatedBy: updatedBy
             }
           })
         }
@@ -211,16 +228,13 @@ module.exports.editPatch = async (req, res) => {
   req.body.stock = parseInt(req.body.stock);
   req.body.price = parseInt(req.body.price);
 
-  const updateBy = {
-    account_id: res.locals.user.id,
-    updateAt: new Date()
-  }
-  req.body.updateBy = updateBy;
-
   await Product.updateOne({ _id: id }, {
     ...req.body,
     $push: {
-      updateBy: updateBy
+      updatedBy: {
+        account_id: res.locals.user.id,
+        updatedAt: new Date()
+      }
     }
   });
   req.flash('success', 'Updated Successfully');

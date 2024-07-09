@@ -3,8 +3,6 @@ const mongoose = require('mongoose');
 mongoose.plugin(slug);
 
 const { Schema } = mongoose;
-// khi định nghĩa product x = new Product():
-// nếu không có key truyền vào => null / ""/ default value
 const productSchema = new Schema({
   title: {
     type: String,
@@ -42,7 +40,7 @@ const productSchema = new Schema({
       type: Date,
     }
   },
-  updateBy: [
+  updatedBy: [
     {
       account_id: String,
       updatedAt: Date
