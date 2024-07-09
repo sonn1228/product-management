@@ -1,0 +1,39 @@
+extends ../../layouts/default.pug
+include ../../mixins/select-tree.pug
+block main
+  if(role.permissions.includes("products-category_create"))
+    h2 Create Category product
+    form(action=`${prefixAdmin}/products-category/create` method="post" enctype="multipart/form-data")
+      .mb-3.mt-3
+        label(for='title') Title:
+        input#title.form-control(type='text' placeholder='Enter title' name='title' )
+      .mb-3.mt-3
+        label(for='title') Danh mục cha:
+        select.form-control(name="parent_id")
+          option(value="") -- Chọn danh mục cha --
+          if(records)
+            +select-tree(records)
+
+      .mb-3
+        label(for='description') Description:
+        textarea#description.form-control(type='text' placeholder='Enter description' name='description')
+      .mb-3(upload-image)
+        label(for='thumbnail') Thumbnail:
+        br
+        input#thumbnail(type='file' upload-image-input placeholder='Enter thumbnail' name='thumbnail')
+        img(src="" class="image-preview" alt="" upload-image-img)
+      .mb-3
+        label(for='position') position:
+        input#thumbnail.form-control(type='number' placeholder='-- Position Up --' name='position' )
+      .mb-3
+        .form-check
+          input#radio1.form-check-input(type='radio' name='status' value='active' checked)
+          | Active
+          label.form-check-label(for='radio1')
+        .form-check
+          input#radio2.form-check-input(type='radio' name='status' value='inactive')
+          | Inactive
+          label.form-check-label(for='radio2')
+
+
+      button.btn.btn-primary(type='submit') Submit

@@ -1,0 +1,39 @@
+header.header(class="p-3")
+  .container
+    .row.align-items-center
+      .col-3
+      .col-5
+        form(
+          action="/search"
+          method="GET"
+        ) 
+          div(class="form-group d-flex mb-0")
+            input(
+              type="text"
+              placeholder="Nhập từ khóa..."
+              class="form-control"
+              name="keyword"
+              value=keyword
+            )
+            button(
+              type="submit"
+              class="btn btn-primary"
+            ) Tìm
+
+      .col-4
+        .inner-menu
+          ul
+            li
+              a(href="/") Trang chủ
+            li(class="sub-menu")
+              a(href="/products") Sản phẩm
+            li
+              a(href="/users/friends") Bạn bè
+            li
+              a(href="/rooms-chat") Phòng chat
+            li
+              a(href="/user/logout") Đăng xuất
+            li
+              a(href="/user/login") Đăng nhập
+            li
+              a(href="/user/register") Đăng ký

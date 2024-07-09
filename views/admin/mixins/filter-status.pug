@@ -1,0 +1,8 @@
+mixin filter-status()
+  .card
+    .card-body(filter-status)
+      .card-header Bộ lọc và Tìm Kiếm
+      select.form-select.mt-3(select-status)
+        option(value="all") Select All Product
+        option(value="active") Select active Product
+        option(value="inactive") Select inactive Product

@@ -1,0 +1,12 @@
+extends ../../layouts/default.pug
+
+
+block main 
+  div(class="d-flex flex-wrap container-fluid ")
+    each item in products 
+      .card(style='width:400px' class='mb-5')
+        img.card-img-top(src=item.thumbnail alt=item.title)
+        .card-body
+          h4.card-title #{item.title}
+          p.card-text #{item.description}
+          a.btn.btn-primary(href='#') See Profile

@@ -1,0 +1,37 @@
+extends ../../layouts/default.pug
+include ../../mixins/select-tree.pug
+block main
+  h2 Detail Category product
+  form(action=`${prefixAdmin}/products-category/edit/${record.id}?_method=patch` method="post" enctype="multipart/form-data")
+    .mb-3.mt-3
+      label(for='title') Title:
+      input#title.form-control(type='text' name='title' value=record.title)
+    .mb-3.mt-3
+      label(for='title') Danh mục cha:
+      select.form-control(name="parent_id")
+        option(value="") -- Chọn danh mục cha --
+        if(records)
+          +select-tree(records, 1, record.parent_id)
+
+    .mb-3
+      label(for='description') Description:
+      textarea#description.form-control(type='text' placeholder='Enter description' name='description') #{record.description}
+    .mb-3(upload-image)
+      label(for='thumbnail') Thumbnail:
+      br
+      input#thumbnail(type='file' upload-image-input placeholder='Enter thumbnail' name='thumbnail')
+      img(src=record.thumbnail class="image-preview" alt="" upload-image-img)
+    .mb-3
+      label(for='position') position:
+      input#thumbnail.form-control(type='number' placeholder='-- Position Up --' name='position' value=record.position)
+    .mb-3
+      .form-check
+        input#radio1.form-check-input(type='radio' name='status' value='active' checked=(record.status == 'active' ? true : false))
+        | Active
+        label.form-check-label(for='radio1')
+      .form-check
+        input#radio2.form-check-input(type='radio' name='status' value='inactive' checked=(record.status == 'inactive' ? true : false))
+        | Inactive
+        label.form-check-label(for='radio2')
+    a.btn.btn-warning(href=`${prefixAdmin}/products-category/edit/${record.id}`) Edit
+

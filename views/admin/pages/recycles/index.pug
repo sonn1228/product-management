@@ -1,0 +1,131 @@
+extends ../../layouts/default.pug
+include ../../mixins/filter-status
+include ../../mixins/sort
+include ../../mixins/pagination
+include ../../mixins/search
+include ../../mixins/moment
+
+block main 
+  if(role.permissions.includes("products_view"))
+    .row 
+      .col-4
+        +filter-status()
+      .col-4 
+        .card
+          +sort()
+      .col-4 
+        +search(objSearch)
+    .row.m-3
+      .col-6
+        if(role.permissions.includes("products_edit"))
+          .card 
+            .card-body
+              form(action=`${prefixAdmin}/products/change-multi?_method=patch` method="post" class="row" form-change-multi)
+                select(class="custom-select col-7" name="action")
+                  option(selected disabled value="") Chọn hành động...
+                  option(value='active') Hoạt động
+                  option(value='inactive') Dừng hoạt động
+                  option(value='delete') Xóa
+                  option(value='position') Change position
+                input.d-none(type="text" name="ids" value="")
+                .input-group-append.col-5
+                  button(
+                    class="btn btn-outline-secondary"
+                    type='submit'
+                  ) Áp dụng
+    table(
+      class="table table-hover table-sm"
+      checkbox-multi
+    )
+      thead
+        tr
+          th
+            input(type="checkbox" name="checkAll" )
+          th STT
+          th Hình ảnh
+          th Tiêu đề
+          th Giá
+          th Vị trí
+          th Trạng thái
+          th Xóa bởi
+          th Hành động
+      tbody
+        each item, index in products
+          tr
+            td 
+              input(type="checkbox" name="checkboxItem" data-id=item.id)
+            td #{index + 1}
+            td
+              img(
+                src=item.thumbnail
+                alt=item.title
+                width="100px"
+                height="auto"
+              )
+            td 
+              h6 #{item.title}
+            td #{item.price}$
+            td
+              input(
+                name="position"
+                value=item.position
+                type="number"
+                style="width: 60px;"
+                min="1"
+              )
+            td
+              if(role.permissions.includes("products_edit"))
+                if(item.status == "active")
+                  button(
+                    button-change-status
+                    data-id=item.id
+                    data-status="inactive"
+                    class="badge badge-success"
+                  ) Hoạt động
+                else
+                  button(
+                    button-change-status
+                    data-id=item.id
+                    data-status="active"
+                    class="badge badge-danger"
+                  ) Dừng hoạt động
+              else 
+                if(item.status == "active")
+                  button(
+                    data-status="inactive"
+                    class="badge badge-success"
+                  ) Hoạt động
+                else
+                  button(
+                    data-status="active"
+                    class="badge badge-danger"
+                  ) Dừng hoạt động
+            td  
+              if(item.deletedBy.creator)
+                p #{item.deletedBy.creator}
+              +formatDateTime(item.deletedBy.deletedAt)
+            td
+              if(role.permissions.includes("products_delete"))
+                button(
+                  class="btn btn-secondary btn-sm ml-1"
+                  button-restore
+                  data-id=item.id
+                ) Restore
+              if(role.permissions.includes("products_delete"))
+                button(
+                  class="btn btn-danger btn-sm ml-1"
+                  button-delete
+                  data-id=item.id
+                ) Xóa
+              a(
+                href=`${prefixAdmin}/products/detail/${item.id}`
+                class="btn btn-info btn-sm ml-1"
+              ) Chi tiết
+    +pagination(objPagination)
+
+    form(action=`${prefixAdmin}/recycles/products/delete` method="post" form-delete-item)
+    form(action=`${prefixAdmin}/products/change-status` method="post" form-change-status)
+    form(action=`${prefixAdmin}/recycles/products/restore` method="post" form-restore)
+
+
+    script(src="/admin/js/product.js") 

@@ -1,0 +1,34 @@
+extends ../../layouts/default.pug
+include ../../mixins/table-tree.pug
+block main
+  if(role.permissions.includes("products-category_view"))
+    h1(class="mb-4") Danh mục sản phẩm
+    .card.mb-3
+      .card-header Danh sách
+      .card-body
+        .row
+          .col-8
+          .col-4.text-right
+            if(role.permissions.includes("products-category_create"))
+              a(
+                href=`${prefixAdmin}/products-category/create`
+                class="btn btn-outline-success"
+              ) + Thêm mới
+
+        table(
+          class="table table-hover table-sm"
+        )
+          thead
+            tr
+              th STT
+              th Hình ảnh
+              th Tiêu đề
+              th Vị trí
+              th Trạng thái
+              th Hành động
+
+          tbody
+            if(records)
+              +table-tree(records)
+    form(action=`${prefixAdmin}/products-category/delete` method="post" form-delete-item)
+    script(src="/admin/js/product.js") 
