@@ -1,8 +1,15 @@
 extends ../../layouts/default.pug
+include ../../mixins/box-head.pug
+include ../../mixins/alert.pug
+include ../../mixins/product-layout.pug
 
+block main
+  +alert-success()
 
-block main 
-  .container.m-3
-    h3 Home page
+  .container.my-3
+    .row
+      .col-12
+        +box-head("Sản phẩm nổi bật")
+    +product-grid(productsFeatured)
 
 

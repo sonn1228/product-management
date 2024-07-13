@@ -1,3 +1,4 @@
+const productHelper = require('../../helpers/product.helper');
 const Product = require('../../models/product.model');
 module.exports.index = async (req, res) => {
   // find
@@ -10,7 +11,9 @@ module.exports.index = async (req, res) => {
     position: 'desc',
   }
 
-  const products = await Product.find(find).sort(sort);
+  let products = await Product.find(find).sort(sort);
+
+  products = productHelper.priceNewProducts(products);
 
   res.render('client/pages/products/index.pug', {
     pageTitle: "Product client",
