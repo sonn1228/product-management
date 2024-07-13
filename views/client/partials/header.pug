@@ -1,7 +1,11 @@
-header.header(class="p-3")
+include ../mixins/sub-menu.pug
+
+header.header
   .container
     .row.align-items-center
       .col-3
+        .inner-logo
+          a(href="/")
       .col-5
         form(
           action="/search"
@@ -19,7 +23,6 @@ header.header(class="p-3")
               type="submit"
               class="btn btn-primary"
             ) Tìm
-
       .col-4
         .inner-menu
           ul
@@ -27,13 +30,6 @@ header.header(class="p-3")
               a(href="/") Trang chủ
             li(class="sub-menu")
               a(href="/products") Sản phẩm
-            li
-              a(href="/users/friends") Bạn bè
-            li
-              a(href="/rooms-chat") Phòng chat
-            li
-              a(href="/user/logout") Đăng xuất
-            li
-              a(href="/user/login") Đăng nhập
-            li
-              a(href="/user/register") Đăng ký
+              -const pathProduct = "/products"
+              +sub-menu(layoutProductCategory, pathProduct)
+

@@ -8,6 +8,8 @@ module.exports.index = async (req, res) => {
     const find = { deleted: false };
     const records = await ProductCategory.find(find);
     const newRecords = createTreeHelper(records);
+
+
     res.render('admin/pages/products-category/index.pug', {
       titlePage: "Product list",
       records: newRecords

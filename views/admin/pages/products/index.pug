@@ -112,7 +112,7 @@ block main
               +formatDateTime(item.createdBy.createdAt )
             td 
               - const updater = item.updatedBy.slice(-1)[0]
-              if(updater.fullName)
+              if(updater)
                 p #{updater.fullName}
                 +formatDateTime(updater.updatedAt)  
             td

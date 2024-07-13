@@ -34,6 +34,10 @@ const productSchema = new Schema({
       default: Date.now
     }
   },
+  featured: {
+    type: String,
+    default: "0"
+  },
   deletedBy: {
     account_id: String,
     deletedAt: {
