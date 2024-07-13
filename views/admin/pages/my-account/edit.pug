@@ -1,0 +1,40 @@
+extends ../../layouts/default.pug
+
+block main
+  h1(class="mb-4") Thông tin cá nhân
+  form(action=`${prefixAdmin}/my-account/edit?_method=patch` method="post" enctype="multipart/form-data")   
+    .mb-3(upload-image)
+      label(for='thumbnail') avatar:
+      br
+      input#avatar(type='file' upload-image-input placeholder='Enter avatar' name='avatar')
+      img(class="image-preview" src=user.avatar upload-image-img)
+
+    if (user.fullName)
+      .mb-3.mt-3
+        label(for='fullName') Họ và tên:
+        input#title.form-control(type='text' name='fullName' value=user.fullName)
+    if (user.email)
+      .mb-3.mt-3
+        label(for='email') email:
+        input#title.form-control(type='text' name='email' value=user.email)
+    if (user.phone)
+      .mb-3.mt-3
+        label(for='phone') phone:
+        input#title.form-control(type='text' name='phone' value=user.phone)
+    .mb-3
+      .form-check
+        input#radio1.form-check-input(type='radio' name='status' value='active' checked=(user.status == 'active' ? true : false))
+        | Active
+        label.form-check-label(for='radio1')
+      .form-check
+        input#radio2.form-check-input(type='radio' name='status' value='inactive' checked=(user.status == 'inactive' ? true : false))
+        | Inactive
+        label.form-check-label(for='radio2')
+
+    if (role.title)
+      p Phân quyền: <b>#{role.title}</b>
+
+    button(
+      class="btn btn-primary"
+      type="submit"
+    ) Cập nhật

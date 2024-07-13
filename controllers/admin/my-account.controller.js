@@ -1,3 +1,4 @@
+const Account = require('../../models/account.model');
 const Role = require('../../models/role.model');
 //[GET] /admin/roles
 module.exports.index = async (req, res) => {
@@ -13,7 +14,26 @@ module.exports.index = async (req, res) => {
 }
 //[GET] /admin/edit
 module.exports.edit = async (req, res) => {
-  res.send('<h1>Edit account</h1>')
+  res.render('admin/pages/my-account/edit.pug')
 }
 
+//[PATCH] /admin/editPatch
+module.exports.editPatch = async (req, res) => {
+  const id = res.locals.user.id;
+  const existEmail = await Account.findOne({
+    _id: { $ne: id },
+    email: req.body.email,
+    deleted: false
+  })
+  if (existEmail) {
+    req.flash('error', "Email Existed")
+    res.redirect('back');
+    return;
+  }
+  await Account.updateOne({
+    _id: id
+  }, req.body)
+  req.flash('success', "Update Successfully");
+  res.redirect('back');
+}
 
