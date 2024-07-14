@@ -8,7 +8,7 @@ block main
   h1(class="mb-4") Thêm mới sản phẩm
 
   form(
-    action=`/${prefixAdmin}/products/create`
+    action=`${prefixAdmin}/products/create`
     id="form-create-product"
     method="POST"
     enctype="multipart/form-data"
@@ -30,8 +30,8 @@ block main
         class="form-control"
       )
         option(value="") -- Chọn danh mục --
-        if(category)
-          +select-tree(category)
+        if(records)
+          +select-tree(records)
     div(class="form-group form-check form-check-inline")
       input(
         type="radio"

@@ -173,7 +173,6 @@ module.exports.create = async (req, res) => {
     deleted: false
   });
   const newRecords = createTreeHelper(records);
-
   res.render('admin/pages/products/create.pug', {
     titlePage: "Create Product",
     records: newRecords
@@ -192,7 +191,6 @@ module.exports.createPost = async (req, res) => {
     req.body.createdBy = {
       account_id: res.locals.user.id
     }
-
 
     const product = new Product(req.body);
     await product.save();

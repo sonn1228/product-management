@@ -8,6 +8,7 @@ const productSchema = new Schema({
     type: String,
     required: true,
   },
+  product_category_id: String,
   description: String,
   price: Number,
   discountPercentage: Number,

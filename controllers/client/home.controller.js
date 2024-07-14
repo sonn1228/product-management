@@ -7,13 +7,25 @@ module.exports.index = async (req, res) => {
     featured: '1',
     status: 'active'
   }
-  let productsFeatured = await Product.find(find);
+  const productsFeatured = await Product.find(find);
 
-  productsFeatured = productHelper.priceNewProducts(productsFeatured);
+  const newProductsFeatured = productHelper.priceNewProducts(productsFeatured);
 
+  // new product
+  const productsNew = await Product.find({
+    status: 'active',
+    deleted: false
+  }).limit(6).sort({
+    position: "desc"
+  });
+
+  const newProductsNew = productHelper.priceNewProducts(productsNew);
+
+  // end new product
 
   res.render('client/pages/home/index.pug', {
     titlePage: 'Client Product',
-    productsFeatured: productsFeatured
+    productsFeatured: newProductsFeatured,
+    productsNew: newProductsNew
   });
 };
