@@ -3,7 +3,7 @@ const productsCategoryHelper = require('../../helpers/products-category');
 const Product = require('../../models/product.model');
 const ProductCategory = require('../../models/productCategory.model');
 
-
+// [GET] /products
 module.exports.index = async (req, res) => {
   // find
   const find = {
@@ -24,9 +24,10 @@ module.exports.index = async (req, res) => {
     products: newProducts,
   });
 }
+// [GET] /products/detail/:slug
 module.exports.detail = async (req, res) => {
   try {
-    const slug = req.params.slug;
+    const slug = req.params.slugProduct;
 
     const find = {
       slug: slug,
@@ -35,7 +36,14 @@ module.exports.detail = async (req, res) => {
     }
 
     const product = await Product.findOne(find);
+    productHelper.priceNewProduct(product);
 
+    if (product.product_category_id) {
+      const productsCategory = await ProductCategory.findOne({
+        _id: product.product_category_id
+      })
+      product.category = productsCategory
+    }
     res.render('client/pages/products/detail.pug', {
       product: product
     });
@@ -43,31 +51,33 @@ module.exports.detail = async (req, res) => {
     res.json(error);
   }
 }
+// [GET] /products/:slugCategory
 module.exports.category = async (req, res) => {
   try {
     const slug = req.params.slugCategory;
     const category = await ProductCategory.findOne({
+      deleted: false,
       slug: slug,
       status: 'active',
-      deleted: false
     })
-
-
-
 
     const listSubCategory = await productsCategoryHelper.getSubCategory(category.id);
     const listIdSubCategory = listSubCategory.map(item => item.id);
 
 
     const products = await Product.find({
-      product_category_id: { $in: [category._id, ...listIdSubCategory] }
+      product_category_id: { $in: [category._id, ...listIdSubCategory] },
+      deleted: false,
+      status: 'active'
     }).sort({
       position: 'desc'
     })
 
+    const newProducts = productHelper.priceNewProducts(products);
+
     res.render('client/pages/products/index.pug', {
       pageTitle: category.title,
-      products: products,
+      products: newProducts,
     });
   } catch (error) {
     req.flash('error', 'Page Not Found!');
