@@ -19,6 +19,7 @@ module.exports.index = async (req, res) => {
   const newProducts = productHelper.priceNewProducts(products);
 
 
+
   res.render('client/pages/products/index.pug', {
     pageTitle: "Product client",
     products: newProducts,
@@ -64,17 +65,14 @@ module.exports.category = async (req, res) => {
     const listSubCategory = await productsCategoryHelper.getSubCategory(category.id);
     const listIdSubCategory = listSubCategory.map(item => item.id);
 
-
     const products = await Product.find({
-      product_category_id: { $in: [category._id, ...listIdSubCategory] },
+      product_category_id: { "$in": [category._id, ...listIdSubCategory] },
       deleted: false,
       status: 'active'
     }).sort({
       position: 'desc'
     })
-
     const newProducts = productHelper.priceNewProducts(products);
-
     res.render('client/pages/products/index.pug', {
       pageTitle: category.title,
       products: newProducts,
