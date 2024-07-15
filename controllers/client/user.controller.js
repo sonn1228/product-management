@@ -41,7 +41,7 @@ module.exports.registerPost = async (req, res) => {
 
 // [GET] /user/login
 module.exports.login = async (req, res) => {
-  res.render("client/pages/user/login", {
+  res.render("client/pages/user/login.pug", {
     pageTitle: "Đăng nhập tài khoản",
   });
 };
@@ -88,12 +88,13 @@ module.exports.loginPost = async (req, res) => {
     statusOnline: "online"
   });
 
-  _io.once('connection', (socket) => {
-    socket.broadcast.emit("SERVER_RETURN_STATUS_ONLINE", {
-      userId: user.id,
-      statusOnline: "online"
-    })
-  })
+  // _io.once('connection', (socket) => {
+  //   socket.broadcast.emit("SERVER_RETURN_STATUS_ONLINE", {
+  //     userId: user.id,
+  //     statusOnline: "online"
+  //   })
+  // })
+  req.flash('success', 'login successfully!');
 
   res.redirect("/");
 };
