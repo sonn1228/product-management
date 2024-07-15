@@ -109,15 +109,9 @@ module.exports.logout = async (req, res) => {
     statusOnline: "offline"
   });
 
-  _io.once('connection', (socket) => {
-    socket.broadcast.emit("SERVER_RETURN_STATUS_ONLINE", {
-      userId: res.locals.user.id,
-      statusOnline: "offline"
-    })
-  })
 
   res.clearCookie("tokenUser");
-
+  req.flash('success', 'Log out successfully!');
   res.redirect("/");
 };
 

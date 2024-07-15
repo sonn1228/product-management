@@ -14,7 +14,7 @@ router.get("/login", controller.login);
 
 router.post("/login", controller.loginPost);
 
-// router.get("/logout", controller.logout);
+router.get("/logout", controller.logout);
 
 // router.get("/password/forgot", controller.forgotPassword);
 
