@@ -1,3 +1,4 @@
+const settingRoutes = require("./setting.route");
 const dashboardRoutes = require('./dashboard.route');
 const productRoutes = require('./product.route');
 const roleRoutes = require('./role.route');
@@ -27,5 +28,5 @@ module.exports = (app) => {
 
 
   app.use(`${PATH_ADMIN}/recycles`, middleware.requireAuth, recycleRoutes);
-
+  app.use(PATH_ADMIN + "/settings", middleware.requireAuth, settingRoutes);
 }

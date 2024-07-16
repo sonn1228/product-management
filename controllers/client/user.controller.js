@@ -224,8 +224,6 @@ module.exports.info = async (req, res) => {
     deleted: false
   }).select("-password");
 
-  console.log(infoUser);
-
   res.render("client/pages/user/info.pug", {
     pageTitle: "Thông tin tài khoản",
     infoUser: infoUser
