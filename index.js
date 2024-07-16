@@ -49,7 +49,9 @@ clientRoutes(app);
 
 
 
-
+app.get("*", (req, res) => {
+  res.render('client/pages/errors/404.pug');
+})
 
 
 app.listen(port, () => {
