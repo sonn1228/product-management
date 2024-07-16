@@ -16,3 +16,15 @@ module.exports.registerPost = async (req, res, next) => {
   }
   next();
 }
+
+module.exports.resetPasswordPost = async (req, res, next) => {
+  const password = req.body.password;
+  const confirmPassword = req.body.confirmPassword;
+
+  if (password != confirmPassword) {
+    req.flash("error", "Xác nhận mật khẩu không khớp!");
+    res.redirect("back");
+    return;
+  }
+  next()
+}
