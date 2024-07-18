@@ -8,7 +8,7 @@ block main
         +box-head("Chat")
     .row
       .col-12 
-        .chat
+        .chat(my-id=user.id)
           .inner-body
             each chat in chats
               div(class=(user.id == chat.infoUser.id ? "inner-outgoing" : "inner-incoming"))
@@ -24,9 +24,7 @@ block main
 
             //- .inner-outgoing
             //-   .inner-content abc xyz 
-            //- .inner-coming
-            //-   .inner-name Abc 
-            //-   .inner-content abc xyz 
+
             //- .inner-outgoing
             //-   .inner-content abc xyz 
             //- .inner-coming

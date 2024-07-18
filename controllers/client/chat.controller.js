@@ -3,6 +3,7 @@ const Chat = require('../../models/chat.model');
 // [GET] /chat/:roomChatId
 module.exports.index = async (req, res) => {
   const userId = res.locals.user.id;
+  const fullName = res.locals.user.fullName;
 
   _io.once('connection', (socket) => {
     socket.on('CLIENT_SEND_MESSAGE', async (content) => {
@@ -11,6 +12,12 @@ module.exports.index = async (req, res) => {
         content: content
       });
       await chat.save();
+
+      socket.emit("SERVER_RETURN_MESSAGE", {
+        user_id: userId,
+        fullName: fullName,
+        content: content
+      })
     })
   })
 
