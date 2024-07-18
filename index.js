@@ -13,6 +13,14 @@ const clientRoutes = require('./routes/client');
 const systemConfig = require('./config/system');
 const app = express();
 const port = process.env.PORT;
+// socket io
+const { createServer } = require('node:http');
+const { Server } = require('socket.io');
+const server = createServer(app);
+const io = new Server(server);
+io.on('connection', (socket) => {
+  console.log('a user connected');
+});
 
 // tinymce
 app.use('/tinymce', express.static(path.join(__dirname, 'node_modules', 'tinymce')));
@@ -54,6 +62,9 @@ app.get("*", (req, res) => {
 })
 
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
-})
+// app.listen(port, () => {
+//   console.log(`Example app listening on port ${port}`);
+// })
+server.listen(3000, () => {
+  console.log(`server running at http://localhost:${port}`);
+});
