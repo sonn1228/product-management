@@ -37,9 +37,7 @@ var _require2 = require('socket.io'),
 
 var server = createServer(app);
 var io = new Server(server);
-io.on('connection', function (socket) {
-  console.log('a user connected');
-}); // tinymce
+global._io = io; // tinymce
 
 app.use('/tinymce', express["static"](path.join(__dirname, 'node_modules', 'tinymce'))); // express flash
 
