@@ -10,19 +10,28 @@ block main
       .col-12 
         .chat
           .inner-body
-            .inner-coming
-              .inner-name Abc 
-              .inner-content abc xyz 
-            .inner-outgoing
-              .inner-content abc xyz 
-            .inner-coming
-              .inner-name Abc 
-              .inner-content abc xyz 
-            .inner-outgoing
-              .inner-content abc xyz 
-            .inner-coming
-              .inner-name Abc 
-              .inner-content abc xyz 
+            each chat in chats
+              div(class=(user.id == chat.infoUser.id ? "inner-outgoing" : "inner-incoming"))
+                if(user.id != chat.infoUser.id)
+                  .inner-name #{chat.infoUser.fullName}
+                if(chat.content)
+                  .inner-content
+                    | #{chat.content}
+                if(chat.images)
+                  .inner-images
+                    each image in chat.images
+                      img(src=image)
+
+            //- .inner-outgoing
+            //-   .inner-content abc xyz 
+            //- .inner-coming
+            //-   .inner-name Abc 
+            //-   .inner-content abc xyz 
+            //- .inner-outgoing
+            //-   .inner-content abc xyz 
+            //- .inner-coming
+            //-   .inner-name Abc 
+            //-   .inner-content abc xyz 
           .inner-foot
             form(action="" class="inner-form") 
               input(type="text" name="content")
