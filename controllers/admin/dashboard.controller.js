@@ -39,8 +39,6 @@ module.exports.index = async (req, res) => {
     status: "inactive"
   });
 
-  console.log(statistic);
-
   res.render("admin/pages/dashboard/index.pug", {
     pageTitle: "Trang tổng quan",
     statistic: statistic

@@ -1,3 +1,4 @@
+
 const settingRoutes = require("./setting.route");
 const dashboardRoutes = require('./dashboard.route');
 const productRoutes = require('./product.route');
@@ -10,11 +11,15 @@ const myAccountRoutes = require('./my-account.route');
 const productCategoryRoutes = require('./products-category.route');
 const systemConfig = require('../../config/system');
 
+const authController = require('../../controllers/admin/auth.controller');
 
 // middleware
 const middleware = require('../../middleware/admin/auth.middleware');
 module.exports = (app) => {
   const PATH_ADMIN = systemConfig.prefixAdmin;
+
+  app.get(`${PATH_ADMIN}`, authController.login);
+
 
   app.use(`${PATH_ADMIN}/dashboard`, middleware.requireAuth, dashboardRoutes);
   app.use(`${PATH_ADMIN}/products`, middleware.requireAuth, productRoutes);

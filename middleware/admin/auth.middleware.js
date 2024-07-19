@@ -7,7 +7,7 @@ module.exports.requireAuth = async (req, res, next) => {
       token: req.cookies.token
     }).select("-password");
     if (!user) {
-      res.redirect(`${systemConfig.prefixAdmin}/auth/login`);
+      res.redirect(`${systemConfig.prefixAdmin}`);
       return;
     }
     const role = await Role.findOne({

@@ -3,6 +3,7 @@ const systemConfig = require('../../config/system');
 const md5 = require('md5');
 
 module.exports.login = (req, res) => {
+  console.log(req.cookies);
   if (req.cookies.token) {
     res.redirect(`${systemConfig.prefixAdmin}/dashboard`);
     return;
@@ -37,5 +38,5 @@ module.exports.loginPost = async (req, res) => {
 
 module.exports.logout = async (req, res) => {
   res.clearCookie('token');
-  res.redirect(`${systemConfig.prefixAdmin}/auth/login`)
+  res.redirect(`${systemConfig.prefixAdmin}`)
 }
