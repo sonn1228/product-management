@@ -5,6 +5,7 @@ import validate from '../../validate/admin/auth.validate.js';
 
 const router = express.Router();
 
+router.get('/login', controller.login);
 router.get('/logout', controller.logout);
 router.post('/login', validate.loginPost, controller.loginPost);
 

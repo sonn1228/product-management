@@ -2,21 +2,20 @@ import Account from '../../models/account.model.js';
 import systemConfig from '../../config/system.js';
 import md5 from 'md5';
 
-class AuthController {
+const controller = {
 
   // [GET] /admin/login
-  login = (req, res) => {
+  login: (req, res) => {
     if (req.cookies.token) {
       res.redirect(`${systemConfig.prefixAdmin}/dashboard`);
       return;
     }
     res.render('admin/pages/auth/login.ejs', {
-      layout: 'admin/layouts/default.ejs',
     });
-  }
+  },
 
   // [POST] /admin/login
-  loginPost = async (req, res) => {
+  loginPost: async (req, res) => {
     const email = req.body.email;
     const password = md5(req.body.password);
     const account = await Account.findOne({ email });
@@ -38,14 +37,14 @@ class AuthController {
     }
     res.cookie('token', account.token);
     res.redirect(`${systemConfig.prefixAdmin}/dashboard`);
-  }
+  },
 
   // [GET] /admin/logout
-  logout = async (req, res) => {
+  logout: async (req, res) => {
     res.clearCookie('token');
     res.redirect(`${systemConfig.prefixAdmin}`);
   }
 
 }
 
-export default new AuthController();
+export default controller;

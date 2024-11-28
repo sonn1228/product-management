@@ -8,10 +8,10 @@ import flash from 'express-flash';
 import methodOverride from 'method-override';
 import moment from 'moment';
 import dotenv from 'dotenv';
-import database from './config/database.js';
-import adminRoutes from './routes/admin/index.js';
-import clientRoutes from './routes/client/index.js';
-import systemConfig from './config/system.js';
+import database from './src/config/database.js';
+import adminRoutes from './src/routes/admin/index.js';
+import clientRoutes from './src/routes/client/index.js';
+import systemConfig from './src/config/system.js';
 
 dotenv.config(); // Load environment variables
 
@@ -22,7 +22,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 // Middleware configuration
-app.use('/tinymce', express.static(path.join(__dirname, process.env.TINYMCE_PATH || '../node_modules/tinymce')));
+app.use('/tinymce', express.static(path.join(__dirname, process.env.TINYMCE_PATH || './node_modules/tinymce')));
 app.use(cookieParser(process.env.COOKIE_SECRET || 'default_secret'));
 app.use(session({
   secret: process.env.SESSION_SECRET || 'default_secret',
@@ -45,8 +45,8 @@ database();
 // Static and view directories
 app.set('view engine', 'ejs');
 app.use(expressLayouts);
-app.set('views', path.join(__dirname, 'views'));
-app.use(express.static(path.join(__dirname, 'public')));
+app.set('views', path.join(__dirname, 'src/views'));
+app.use(express.static(path.join(__dirname, 'src/public')));
 
 // Route handling
 adminRoutes(app);
