@@ -1,5 +1,5 @@
 # Sử dụng phiên bản Node.js làm base image
-FROM node:16
+FROM node:23-slim
 
 # Thiết lập thư mục làm việc trong container
 WORKDIR /app

@@ -8,4 +8,4 @@
 
 ## Client Information
 
-- **Truy cập**: [Admin Login Page](https://product-management-gqpyq5dzq-sonta2812s-projects.vercel.app)
+- **Truy cập**: [Client Page](https://product-management-gqpyq5dzq-sonta2812s-projects.vercel.app)
