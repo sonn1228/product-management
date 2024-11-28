@@ -1,0 +1,9 @@
+<%- include('product-item.ejs') %> 
+
+<% function productGrid(products) { %>
+  <div class="row">
+    <% products.forEach(item => { %>
+      <%- productItem(item) %>
+    <% }); %>
+  </div>
+<% } %>

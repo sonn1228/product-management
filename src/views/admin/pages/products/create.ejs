@@ -1,0 +1,74 @@
+<div name="main">
+  <h1 class="text-3xl font-semibold mb-6">Create New Product</h1>
+
+  <form action="<%= prefixAdmin %>/products/create" method="POST" enctype="multipart/form-data"
+    class="grid grid-cols-2 gap-6">
+    <div class="space-y-2">
+      <label for="title" class="block text-sm font-medium text-gray-700">Title</label>
+      <input type="text" id="title" name="title"
+        class="block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+        required>
+    </div>
+    <div class="space-y-2">
+      <label for="product_category_id" class="block text-sm font-medium text-gray-700">
+        Category
+      </label>
+      <select id="category_id" name="category_id"
+        class="block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500">
+        <option value="">-- Select Category --</option>
+        <% categories.map(category=> { %>
+          <option value="<%= category._id %>">
+            <%= category.title %>
+          </option>
+          <% }) %>
+      </select>
+    </div>
+    <div class="space-y-2">
+      <label for="price" class="block text-sm font-medium text-gray-700">Price</label>
+      <input type="number" id="price" name="price" value="0" min="0"
+        class="block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500">
+    </div>
+    <div class="space-y-2">
+      <label for="stock" class="block text-sm font-medium text-gray-700">Stock</label>
+      <input type="number" id="stock" name="stock" value="0" min="0"
+        class="block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500">
+    </div>
+    <div class="space-y-2">
+      <label for="discountPercentage" class="block text-sm font-medium text-gray-700">discountPercentage</label>
+      <input type="number" id="discountPercentage" name="discountPercentage" value="0" min="0"
+        class="block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500">
+    </div>
+    <div class="space-y-2">
+      <label for="Thumbnail" class="block text-sm font-medium text-gray-700">Thumbnail: </label>
+      <input type="text" id="Thumbnail" name="thumbnail"
+        class="block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500">
+    </div>
+
+    <div class="space-y-2">
+      <label for="status" class="block text-sm font-medium text-gray-700">Status: </label>
+      <select name="status" id="status">
+        <option value="active" selected>active</option>
+        <option value="inactive">inactive</option>
+      </select>
+    </div>
+
+
+
+    <div class="space-y-2 col-span-2">
+      <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
+      <textarea id="description" name="description" rows="4"
+        class="block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"></textarea>
+    </div>
+
+    <div class="space-y-2">
+      <label for="thumbnail" class="block text-sm font-medium text-gray-700">Image</label>
+      <input type="file" id="thumbnail" name="thumbnail" accept="image/*"
+        class="block w-full px-4 py-2 text-sm text-gray-500 bg-white border border-gray-300 rounded-md">
+    </div>
+
+    <div class="flex justify-end col-span-2">
+      <button type="submit" class="px-6 py-3 bg-indigo-600 text-white rounded-md shadow-md hover:bg-indigo-700">Create
+        Product</button>
+    </div>
+  </form>
+</div>

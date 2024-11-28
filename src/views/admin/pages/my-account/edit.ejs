@@ -1,0 +1,57 @@
+<%- include('../../layouts/default.pug') %>
+
+  <%- block('main') %>
+    <h1 class="mb-4">Thông tin cá nhân</h1>
+    <form action="<%= `${prefixAdmin}/my-account/edit?_method=patch` %>" method="post" enctype="multipart/form-data">
+
+      <div class="mb-3 upload-image">
+        <label for="thumbnail">avatar:</label><br>
+        <input id="avatar" type="file" upload-image-input placeholder="Enter avatar" name="avatar">
+        <img class="image-preview" src="<%= user.avatar %>" upload-image-img>
+      </div>
+
+      <% if (user.fullName) { %>
+        <div class="mb-3 mt-3">
+          <label for="fullName">Họ và tên:</label>
+          <input id="title" class="form-control" type="text" name="fullName" value="<%= user.fullName %>">
+        </div>
+        <% } %>
+
+          <% if (user.email) { %>
+            <div class="mb-3 mt-3">
+              <label for="email">email:</label>
+              <input id="title" class="form-control" type="text" name="email" value="<%= user.email %>">
+            </div>
+            <% } %>
+
+              <% if (user.phone) { %>
+                <div class="mb-3 mt-3">
+                  <label for="phone">phone:</label>
+                  <input id="title" class="form-control" type="text" name="phone" value="<%= user.phone %>">
+                </div>
+                <% } %>
+
+                  <div class="mb-3">
+                    <div class="form-check">
+                      <input id="radio1" class="form-check-input" type="radio" name="status" value="active"
+                        <%=user.status==='active' ? 'checked' : '' %>>
+                      | Active
+                      <label class="form-check-label" for="radio1"></label>
+                    </div>
+                    <div class="form-check">
+                      <input id="radio2" class="form-check-input" type="radio" name="status" value="inactive"
+                        <%=user.status==='inactive' ? 'checked' : '' %>>
+                      | Inactive
+                      <label class="form-check-label" for="radio2"></label>
+                    </div>
+                  </div>
+
+                  <% if (role.title) { %>
+                    <p>Phân quyền: <b>
+                        <%= role.title %>
+                      </b></p>
+                    <% } %>
+
+                      <button class="btn btn-primary" type="submit">Cập nhật</button>
+    </form>
+    <%- endblock() %>

@@ -1,0 +1,14 @@
+<% function subMenu(records, pathProduct) { %>
+  <ul>
+    <% records.forEach(item=> { %>
+      <li>
+        <a href="<%= pathProduct %>/<%= item.slug %>">
+          <%= item.title %>
+        </a>
+        <% if (item.children && item.children.length> 0) { %>
+          <%- subMenu(item.children, pathProduct) %>
+            <% } %>
+      </li>
+      <% }); %>
+  </ul>
+  <% } %>

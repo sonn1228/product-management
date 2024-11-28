@@ -1,0 +1,47 @@
+<%- include('../../layouts/default.pug') %>
+
+  <%- block('main') %>
+    <h1 class="mb-4">Thông tin cá nhân</h1>
+
+    <% if (user.avatar) { %>
+      <img src="<%= user.avatar %>" width="150px" class="mb-3">
+      <% } else { %>
+        <img src="/admin/images/avatar.png" width="150px" class="mb-3">
+        <% } %>
+
+          <% if (user.fullName) { %>
+            <p>Họ tên: <b>
+                <%= user.fullName %>
+              </b></p>
+            <% } %>
+
+              <% if (user.email) { %>
+                <p>Email: <b>
+                    <%= user.email %>
+                  </b></p>
+                <% } %>
+
+                  <% if (user.phone) { %>
+                    <p>Số điện thoại: <b>
+                        <%= user.phone %>
+                      </b></p>
+                    <% } %>
+
+                      <p>
+                        <span>Trạng thái: </span>
+                        <span>
+                          <b>
+                            <%= user.status==="active" ? "Hoạt động" : "Dừng hoạt động" %>
+                          </b>
+                        </span>
+                      </p>
+
+                      <% if (role.title) { %>
+                        <p>Phân quyền: <b>
+                            <%= role.title %>
+                          </b></p>
+                        <% } %>
+
+                          <a href="<%= `${prefixAdmin}/my-account/edit` %>" class="btn btn-primary">Chỉnh sửa thông
+                            tin</a>
+                          <%- endblock() %>

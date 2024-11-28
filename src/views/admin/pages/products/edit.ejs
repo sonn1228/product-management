@@ -1,0 +1,97 @@
+<%- include('../../layouts/default.pug') %>
+  <%- include('../../mixins/alert.pug') %>
+    <%- include('../../mixins/select-tree.pug') %>
+
+      <%- block('main') %>
+        <%- alertError() %>
+          <%- alertSuccess() %>
+
+            <h1 class="mb-4">Chỉnh sửa sản phẩm</h1>
+
+            <form action="<%= `${prefixAdmin}/products/edit/${product.id}?_method=PATCH` %>" method="POST"
+              enctype="multipart/form-data">
+              <div class="form-group">
+                <label for="title">Tiêu đề</label>
+                <input type="text" class="form-control" id="title" name="title" value="<%= product.title %>" required>
+              </div>
+
+              <div class="form-group">
+                <label for="product_category_id">Danh mục</label>
+                <select name="product_category_id" id="product_category_id" class="form-control">
+                  <option value="">-- Chọn danh mục --</option>
+                  <% if (category) { %>
+                    <%- selectTree(category, 1, product.product_category_id) %>
+                      <% } %>
+                </select>
+              </div>
+
+              <div class="form-group form-check form-check-inline">
+                <input type="radio" class="form-check-input" id="featured1" name="featured" value="1"
+                  <%=(product.featured=="1" ? 'checked' : '' ) %>
+                >
+                <label for="featured1" class="form-check-label">Nổi bật</label>
+              </div>
+
+              <div class="form-group form-check form-check-inline">
+                <input type="radio" class="form-check-input" id="featured0" name="featured" value="0"
+                  <%=(product.featured=="0" ? 'checked' : '' ) %>
+                >
+                <label for="featured0" class="form-check-label">Không</label>
+              </div>
+
+              <div class="form-group">
+                <label for="desc">Mô tả</label>
+                <textarea class="form-control" id="desc" name="description" rows="5"
+                  textarea-mce><%= product.description %></textarea>
+              </div>
+
+              <div class="form-group">
+                <label for="price">Giá</label>
+                <input type="number" class="form-control" id="price" name="price" value="<%= product.price %>" min="0">
+              </div>
+
+              <div class="form-group">
+                <label for="discount">% Giảm giá</label>
+                <input type="number" class="form-control" id="discount" name="discountPercentage"
+                  value="<%= product.discountPercentage %>" min="0">
+              </div>
+
+              <div class="form-group">
+                <label for="stock">Số lượng</label>
+                <input type="number" class="form-control" id="stock" name="stock" value="<%= product.stock %>" min="0">
+              </div>
+
+              <div class="form-group" upload-image>
+                <label for="thumbnail">Ảnh</label>
+                <input type="file" class="form-control-file" id="thumbnail" name="thumbnail" accept="image/*"
+                  upload-image-input>
+                <img src="<%= product.thumbnail %>" class="image-preview" upload-image-preview>
+              </div>
+
+              <div class="form-group">
+                <label for="position">Vị trí</label>
+                <input type="number" class="form-control" id="position" name="position" placeholder="Tự động tăng"
+                  min="1" value="<%= product.position %>" required>
+              </div>
+
+              <div class="form-group form-check form-check-inline">
+                <input type="radio" class="form-check-input" id="statusActive" name="status" value="active"
+                  <%=(product.status=="active" ? 'checked' : '' ) %>
+                >
+                <label for="statusActive" class="form-check-label">Hoạt động</label>
+              </div>
+
+              <div class="form-group form-check form-check-inline">
+                <input type="radio" class="form-check-input" id="statusInActive" name="status" value="inactive"
+                  <%=(product.status=="inactive" ? 'checked' : '' ) %>
+                >
+                <label for="statusInActive" class="form-check-label">Dừng hoạt động</label>
+              </div>
+
+              <div class="form-group">
+                <button type="submit" class="btn btn-primary">
+                  Cập nhật
+                </button>
+              </div>
+            </form>
+            <%- endblock() %>

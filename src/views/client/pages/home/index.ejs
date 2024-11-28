@@ -1,0 +1,106 @@
+<div class="container mx-auto my-6">
+    <div class="text-center mb-8">
+        <h2 class="text-2xl font-bold text-gray-800">Sản phẩm nổi bật</h2>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5 gap-6">
+        <% productsFeatured.forEach(item=> { %>
+            <div
+                class="bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-2xl transform transition-transform duration-300 hover:scale-105 p-4 max-w-sm">
+                <div class="relative">
+                    <a href="/products/detail/<%= item.slug %>">
+                        <img src="<%= item.thumbnail %>" alt="<%= item.title %>" class="w-full h-56 object-cover mb-4">
+                        <div class="absolute top-2 left-2 bg-blue-500 text-white px-2 py-1 text-xs">
+                            Trả góp 0%
+                        </div>
+                        <% if (item.featured=="1" ) { %>
+                            <div class="absolute top-2 right-2 bg-yellow-500 text-black px-2 py-1 text-xs font-bold">
+                                Giá rẻ quả
+                            </div>
+                            <% } %>
+                                <% if (item.brand=="Lenovo" ) { %>
+                                    <div
+                                        class="absolute top-8 right-2 bg-red-500 text-white px-2 py-1 text-xs font-bold">
+                                        Tuần lễ Lenovo
+                                    </div>
+                                    <% } %>
+                    </a>
+                </div>
+                <div class="p-2">
+                    <h3 class="text-lg font-semibold text-gray-700 line-clamp-2 overflow-hidden">
+                        <a href="/products/detail/<%= item.slug %>">
+                            <%= item.title %>
+                        </a>
+                    </h3>
+                    <div class="mt-2 text-red-600 font-bold text-xl">
+                        <%= Number(item.priceNew).toLocaleString('vi-VN') %>₫
+                    </div>
+                    <div class="text-gray-500 line-through text-sm">
+                        <%= item.price.toLocaleString('vi-VN') %>₫
+                    </div>
+                    <div class="text-red-500 font-medium text-sm">-<%= item.discountPercentage %>%</div>
+                    <div class="flex items-center mt-2">
+                        <div class="flex">
+                            <i class="fas fa-star text-yellow-400"></i>
+                            <span class="text-gray-600 text-sm ml-1">(4.5)</span>
+                        </div>
+                        <a href="#" class="text-blue-500 text-sm ml-4">So sánh</a>
+                    </div>
+                </div>
+            </div>
+            <% }); %>
+    </div>
+
+    <div class="text-center my-8">
+        <h2 class="text-2xl font-bold text-gray-800">Sản phẩm mới</h2>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5 gap-6">
+        <% productsNew.forEach(item=> { %>
+            <div
+                class="bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-2xl transform transition-transform duration-300 hover:scale-105 p-4 max-w-sm">
+                <div class="relative">
+                    <a href="/products/detail/<%= item.slug %>">
+                        <img src="<%= item.thumbnail %>" alt="<%= item.title %>" class="w-full h-56 object-cover mb-4">
+                        <div class="absolute top-2 left-2 bg-blue-500 text-white px-2 py-1 text-xs">
+                            Trả góp 0%
+                        </div>
+                        <% if (item.featured=="1" ) { %>
+                            <div class="absolute top-2 right-2 bg-yellow-500 text-black px-2 py-1 text-xs font-bold">
+                                Giá rẻ quả
+                            </div>
+                            <% } %>
+                                <% if (item.brand=="Lenovo" ) { %>
+                                    <div
+                                        class="absolute top-8 right-2 bg-red-500 text-white px-2 py-1 text-xs font-bold">
+                                        Tuần lễ Lenovo
+                                    </div>
+                                    <% } %>
+                    </a>
+                </div>
+                <div class="p-2">
+                    <h3 class="text-lg font-semibold text-gray-700 line-clamp-2 overflow-hidden">
+                        <a href="/products/detail/<%= item.slug %>">
+                            <%= item.title %>
+                        </a>
+                    </h3>
+                    <div class="mt-2 text-red-600 font-bold text-xl">
+                        <%= Number(item.priceNew).toLocaleString('vi-VN') %>₫
+                    </div>
+                    <div class="row">
+                        <div class="text-gray-500 line-through text-sm">
+                            <%= item.price.toLocaleString('vi-VN') %>₫
+                        </div>
+                        <span class="text-red-500 font-medium text-sm">-<%= item.discountPercentage %>%</span>
+                    </div>
+
+                    <div class="flex items-center mt-2">
+                        <div class="flex">
+                            <i class="fas fa-star text-yellow-400"></i>
+                            <span class="text-gray-600 text-sm ml-1">(4.5)</span>
+                        </div>
+                        <a href="#" class="text-blue-500 text-sm ml-4">So sánh</a>
+                    </div>
+                </div>
+            </div>
+            <% }); %>
+    </div>
+</div>

@@ -1,0 +1,90 @@
+<div class="container mx-auto p-4">
+  <h1 class="text-2xl font-bold mb-4">Danh mục sản phẩm</h1>
+
+  <div class="bg-white shadow-md rounded-md mb-4">
+    <div class="bg-gray-200 rounded-t-md px-4 py-3">
+      <div class="flex justify-between items-center">
+        <span class="font-medium">Danh sách</span>
+        <a href="<%= `${prefixAdmin}/products-category/create` %>"
+          class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-green-300">
+          + Thêm mới
+        </a>
+      </div>
+    </div>
+
+    <div class="p-4">
+      <table class="table-auto w-full">
+        <thead>
+          <tr class="bg-gray-100">
+            <th class="px-4 py-2 text-left">STT</th>
+            <th class="px-4 py-2 text-left">Tiêu đề</th>
+            <th class="px-4 py-2 text-left">Trạng thái</th>
+            <th class="px-4 py-2 text-left">Hành động</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% records.forEach((record, index)=> { %>
+            <tr class="hover:bg-gray-100">
+              <td class="border px-4 py-2">
+                <%= index + 1 %>
+              </td>
+              <td class="border px-4 py-2">
+                <%= record.title %>
+              </td>
+              <td class="border px-4 py-2">
+                <% if (record.status==="active" ) { %>
+                  <span class="bg-green-500 text-white px-2 py-1 rounded-full text-xs">Active</span>
+                  <% } else { %>
+                    <span class="bg-red-500 text-white px-2 py-1 rounded-full text-xs">Inactive</span>
+                    <% } %>
+              </td>
+              <td class="border px-4 py-2">
+                <a href="<%= `${prefixAdmin}/products-category/edit/${record._id}` %>"
+                  class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded text-xs focus:outline-none focus:ring-2 focus:ring-blue-300 mr-2">
+                  Sửa
+                </a>
+
+                <button type="button"
+                  class="delete bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded text-xs focus:outline-none focus:ring-2 focus:ring-red-300"
+                  data-id="<%= record._id %>">
+                  Xóa
+                </button>
+              </td>
+            </tr>
+            <% }); %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <script src="/admin/js/product.js"></script>
+</div>
+
+<script>
+  const deleteBtns = document.querySelectorAll('.delete');
+  deleteBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const id = btn.dataset.id;
+      if (confirm("Bạn có chắc chắn muốn xóa sản phẩm này?")) {
+        const url = `/admin/products-category/delete/${id}`;
+        console.log("URL: ", url);
+        fetch(url, {
+          method: 'DELETE'
+        })
+          .then(response => {
+            console.log("response: ", response);
+            if (!response.ok) {
+              throw new Error('Network response was not ok');
+            }
+            return response.json(); // Hoặc response.text() nếu server trả về text
+          })
+          .then(data => {
+            location.reload();
+          })
+          .catch(error => {
+            console.error('There has been a problem with your fetch operation:', error);
+          });
+        window.location.reload();
+      }
+    });
+  });
+</script>

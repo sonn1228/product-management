@@ -1,0 +1,17 @@
+<header class="header bg-white py-4 shadow-md">
+  <div class="container mx-auto px-4 flex items-center justify-between">
+    <div class="inner-logo">
+      <a href="<%= `${prefixAdmin}/dashboard` %>" class="text-xl font-bold text-gray-800">ADMIN</a>
+    </div>
+    <div class="flex items-center">
+      <a href="<%= `${prefixAdmin}/my-account` %>"
+        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md mr-2">
+        <%= user.fullName %>
+      </a>
+      <a href="<%= `${prefixAdmin}/auth/logout` %>"
+        class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-md">
+        Đăng xuất
+      </a>
+    </div>
+  </div>
+</header>

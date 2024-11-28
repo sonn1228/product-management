@@ -1,0 +1,71 @@
+<main class="container mx-auto p-4">
+    <h1 class="text-3xl font-bold mb-4">Tổng quan</h1>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div class="bg-white shadow-md rounded-lg overflow-hidden">
+            <div class="bg-gray-200 text-gray-700 px-4 py-2">Thông tin tài khoản</div>
+            <div class="p-4">
+                <% if(user.avatar) { %>
+                    <img src="<%= user.avatar %>" alt="Avatar" class="h-24 w-24 rounded-full mb-4 mx-auto">
+                    <% } %>
+                        <% if(user.fullName) { %>
+                            <p class="font-medium">Họ tên: <span class="font-bold">
+                                    <%= user.fullName %>
+                                </span></p>
+                            <% } %>
+                                <% if(user.email) { %>
+                                    <p class="font-medium">Email: <span class="font-bold">
+                                            <%= user.email %>
+                                        </span></p>
+                                    <% } %>
+                                        <% if(user.phone) { %>
+                                            <p class="font-medium">Số điện thoại: <span class="font-bold">
+                                                    <%= user.phone %>
+                                                </span></p>
+                                            <% } %>
+            </div>
+        </div>
+
+        <div class="bg-white shadow-md rounded-lg overflow-hidden">
+            <div class="bg-gray-200 text-gray-700 px-4 py-2">Danh mục sản phẩm</div>
+            <div class="p-4">
+                <p class="font-medium">Số lượng: <span class="font-bold">5</span></p>
+                <p class="font-medium">Hoạt động: <span class="font-bold text-green-500">3</span></p>
+                <p class="font-medium">Dừng hoạt động: <span class="font-bold text-red-500">2</span></p>
+            </div>
+        </div>
+
+        <div class="bg-white shadow-md rounded-lg overflow-hidden">
+            <div class="bg-gray-200 text-gray-700 px-4 py-2">Sản phẩm</div>
+            <div class="p-4">
+                <p class="font-medium">Số lượng: <span class="font-bold">
+                        <%= statistic.product.total %>
+                    </span></p>
+                <p class="font-medium">Hoạt động: <span class="font-bold text-green-500">
+                        <%= statistic.product.active %>
+                    </span></p>
+                <p class="font-medium">Dừng hoạt động: <span class="font-bold text-red-500">
+                        <%= statistic.product.inactive %>
+                    </span></p>
+            </div>
+        </div>
+
+        <div class="bg-white shadow-md rounded-lg overflow-hidden">
+            <div class="bg-gray-200 text-gray-700 px-4 py-2">Tài khoản admin</div>
+            <div class="p-4">
+                <p class="font-medium">Số lượng: <span class="font-bold">5</span></p>
+                <p class="font-medium">Hoạt động: <span class="font-bold text-green-500">3</span></p>
+                <p class="font-medium">Dừng hoạt động: <span class="font-bold text-red-500">2</span></p>
+            </div>
+        </div>
+
+        <div class="bg-white shadow-md rounded-lg overflow-hidden">
+            <div class="bg-gray-200 text-gray-700 px-4 py-2">Tài khoản client</div>
+            <div class="p-4">
+                <p class="font-medium">Số lượng: <span class="font-bold">5</span></p>
+                <p class="font-medium">Hoạt động: <span class="font-bold text-green-500">3</span></p>
+                <p class="font-medium">Dừng hoạt động: <span class="font-bold text-red-500">2</span></p>
+            </div>
+        </div>
+    </div>
+</main>

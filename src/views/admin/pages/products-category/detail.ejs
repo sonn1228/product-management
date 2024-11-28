@@ -1,0 +1,58 @@
+<%- include('../../layouts/default.pug') %>
+  <%- include('../../mixins/select-tree.pug') %>
+
+    <%- block('main') %>
+      <h2>Detail Category product</h2>
+      <form action="<%= `${prefixAdmin}/products-category/edit/${record.id}?_method=patch` %>" method="post"
+        enctype="multipart/form-data">
+        <div class="mb-3 mt-3">
+          <label for="title">Title:</label>
+          <input id="title" class="form-control" type="text" name="title" value="<%= record.title %>">
+        </div>
+
+        <div class="mb-3 mt-3">
+          <label for="parent_id">Danh mục cha:</label>
+          <select class="form-control" name="parent_id">
+            <option value="">-- Chọn danh mục cha --</option>
+            <% if (records) { %>
+              <%- include('../../mixins/select-tree.pug', { records: records, selectedParentId: record.parent_id }) %>
+                <% } %>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label for="description">Description:</label>
+          <textarea id="description" class="form-control" placeholder="Enter description"
+            name="description"><%= record.description %></textarea>
+        </div>
+
+        <div class="mb-3 upload-image">
+          <label for="thumbnail">Thumbnail:</label><br>
+          <input id="thumbnail" type="file" class="form-control-file" placeholder="Enter thumbnail" name="thumbnail"
+            upload-image-input>
+          <img src="<%= record.thumbnail %>" class="image-preview" alt="" upload-image-img>
+        </div>
+
+        <div class="mb-3">
+          <label for="position">Position:</label>
+          <input id="position" class="form-control" type="number" placeholder="-- Position Up --" name="position"
+            value="<%= record.position %>">
+        </div>
+
+        <div class="mb-3">
+          <div class="form-check">
+            <input id="radio1" class="form-check-input" type="radio" name="status" value="active"
+              <%=(record.status=='active' ) ? 'checked' : '' %>>
+            <label class="form-check-label" for="radio1">Active</label>
+          </div>
+
+          <div class="form-check">
+            <input id="radio2" class="form-check-input" type="radio" name="status" value="inactive"
+              <%=(record.status=='inactive' ) ? 'checked' : '' %>>
+            <label class="form-check-label" for="radio2">Inactive</label>
+          </div>
+        </div>
+
+        <a href="<%= `${prefixAdmin}/products-category/edit/${record.id}` %>" class="btn btn-warning">Edit</a>
+      </form>
+      <%- endblock() %>

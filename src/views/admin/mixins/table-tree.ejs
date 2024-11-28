@@ -1,0 +1,54 @@
+<% function tableTree(records, level=1) { records.forEach((item, index)=> {
+  const prefix = "-- ".repeat(level);
+  %>
+  <tr>
+    <td>
+      <%= index + 1 %>
+    </td>
+    <td>
+      <img src="<%= item.thumbnail %>" alt="<%= item.title %>" width="100px" height="auto" />
+    </td>
+    <td>
+      <%= prefix %>
+        <%= item.title %>
+    </td>
+    <td>
+      <input type="number" value="<%= item.position %>" style="width: 60px" min="1" name="position" />
+    </td>
+    <td>
+      <% if (role.permissions.includes("products-category_edit")) { %>
+        <% if (item.status==="active" ) { %>
+          <a href="javascript:;" class="badge badge-success" data-status="active" data-id="<%= item.id %>"
+            button-change-status>
+            Hoạt động
+          </a>
+          <% } else { %>
+            <a href="javascript:;" class="badge badge-danger" data-status="inactive" data-id="<%= item.id %>"
+              button-change-status>
+              Dừng hoạt động
+            </a>
+            <% } %>
+              <% } %>
+    </td>
+    <td>
+      <a class="btn btn-secondary btn-sm" href="<%= `${prefixAdmin}/products-category/detail/${item.id}` %>">
+        Chi tiết
+      </a>
+      <% if (role.permissions.includes("products-category_edit")) { %>
+        <a class="btn btn-warning btn-sm ml-1" href="<%= `${prefixAdmin}/products-category/edit/${item.id}` %>">
+          Sửa
+        </a>
+        <% } %>
+          <% if (role.permissions.includes("products-category_delete")) { %>
+            <button class="btn btn-danger btn-sm ml-1" button-delete data-id="<%= item.id %>">
+              Xóa
+            </button>
+            <% } %>
+    </td>
+  </tr>
+  <% if (item.children && item.children.length> 0) {
+    tableTree(item.children, level + 1);
+    }
+    });
+    }
+    %>

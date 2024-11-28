@@ -1,0 +1,96 @@
+<%- include('../../layouts/default.ejs') %>
+  <%- include('../../mixins/box-head.ejs') %>
+
+    <div class="container my-3">
+      <div class="row">
+        <div class="col-12">
+          <%- boxHead("Đặt hàng thành công") %>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12">
+          <div class="alert alert-success">
+            Chúc mừng bạn đã đặt hàng thành công! Chúng tôi sẽ xử lý đơn hàng trong thời gian sớm nhất.
+          </div>
+        </div>
+      </div>
+
+      <% if (order) { %>
+        <div class="row">
+          <div class="col-12">
+            <h4 class="mb-2">Thông tin cá nhân</h4>
+            <table class="table table-bordered">
+              <tbody>
+                <tr>
+                  <td>Họ tên</td>
+                  <td><b>
+                      <%= order.userInfo.fullName %>
+                    </b></td>
+                </tr>
+                <tr>
+                  <td>Số điện thoại</td>
+                  <td><b>
+                      <%= order.userInfo.phone %>
+                    </b></td>
+                </tr>
+                <tr>
+                  <td>Địa chỉ</td>
+                  <td><b>
+                      <%= order.userInfo.address %>
+                    </b></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-12">
+            <h4 class="mb-2">Thông tin đơn hàng</h4>
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>STT</th>
+                  <th>Ảnh</th>
+                  <th>Tên</th>
+                  <th>Giá</th>
+                  <th>Số lượng</th>
+                  <th>Tổng tiền</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% if (order.products.length> 0) { %>
+                  <% order.products.forEach((item, index)=> { %>
+                    <tr>
+                      <td>
+                        <%= index + 1 %>
+                      </td>
+                      <td>
+                        <img src="<%= item.thumbnail %>" alt="<%= item.title %>" width="80px">
+                      </td>
+                      <td>
+                        <%= item.title %>
+                      </td>
+                      <td>
+                        <%= item.price %>$
+                      </td>
+                      <td>
+                        <%= item.quantity %>
+                      </td>
+                      <td>
+                        <%= item.totalPrice %>$
+                      </td>
+                    </tr>
+                    <% }); %>
+                      <% } %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <% if (order.products.length> 0) { %>
+          <h3 class="text-right">Tổng đơn hàng: <%= order.totalPrice %>$</h3>
+          <% } %>
+            <% } %>
+    </div>

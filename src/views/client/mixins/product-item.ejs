@@ -1,0 +1,28 @@
+<% function productItem(item) { %>
+  <div class="col-4 mb-3">
+    <div class="product-item">
+      <div class="inner-image">
+        <a href="/products/detail/<%= item.slug %>">
+          <img src="<%= item.thumbnail %>" alt="<%= item.title %>">
+          <% if (item.featured=="1" ) { %>
+            <div class="inner-featured">Nổi bật</div>
+            <% } %>
+        </a>
+      </div>
+      <div class="inner-content">
+        <h3 class="inner-title">
+          <a href="/products/detail/<%= item.slug %>">
+            <%= item.title %>
+          </a>
+        </h3>
+        <div class="inner-price-new">
+          <%= item.priceNew %>$
+        </div>
+        <div class="inner-price-old">
+          <%= item.price %>$
+        </div>
+        <div class="inner-discount">-<%= item.discountPercentage %>%</div>
+      </div>
+    </div>
+  </div>
+  <% } %>

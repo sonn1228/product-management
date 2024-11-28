@@ -1,0 +1,49 @@
+<aside class="sider w-50 bg-white shadow-md">
+  <div class="inner-menu p-4">
+    <ul class="space-y-2">
+      <li>
+        <a href="<%= `${prefixAdmin}/dashboard` %>" class="block py-2 px-3 hover:bg-gray-100 rounded">Tổng quan</a>
+      </li>
+      <li>
+        <a href="<%= `${prefixAdmin}/products` %>" class="block py-2 px-3 hover:bg-gray-100 rounded">Sản phẩm</a>
+      </li>
+      <li>
+        <a href="<%= `${prefixAdmin}/products-category` %>" class="block py-2 px-3 hover:bg-gray-100 rounded">Danh
+          mục sản phẩm</a>
+      </li>
+      <li>
+        <a href="<%= `${prefixAdmin}/settings/general` %>" class="block py-2 px-3 hover:bg-gray-100 rounded">Cài đặt
+          chung</a>
+      </li>
+      <li>
+        <button id="recycleBinDropdown" class="block py-2 px-3 hover:bg-gray-100 rounded w-full text-left">
+          Recycles Bin
+        </button>
+        <div class="recycle-dropdown hidden absolute bg-white shadow-md rounded mt-2 w-48">
+          <ul class="space-y-2">
+            <li>
+              <a href="<%= `${prefixAdmin}/recycles/products` %>"
+                class="block py-2 px-3 hover:bg-gray-100 rounded">Product</a>
+            </li>
+            <li>
+              <a href="<%= `${prefixAdmin}/recycles2` %>" class="block py-2 px-3 hover:bg-gray-100 rounded">Category
+                Product</a>
+            </li>
+            <li>
+              <a href="<%= `${prefixAdmin}/recycles3` %>" class="block py-2 px-3 hover:bg-gray-100 rounded">Account</a>
+            </li>
+          </ul>
+        </div>
+      </li>
+    </ul>
+  </div>
+</aside>
+
+<script>
+  const recycleBinDropdown = document.getElementById('recycleBinDropdown');
+  const recycleDropdown = recycleBinDropdown.nextElementSibling;
+
+  recycleBinDropdown.addEventListener('click', () => {
+    recycleDropdown.classList.toggle('hidden');
+  });
+</script>

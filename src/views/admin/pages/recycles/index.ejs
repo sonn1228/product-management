@@ -1,0 +1,139 @@
+<%- include('../../layouts/default.pug') %>
+  <%- include('../../mixins/filter-status') %>
+    <%- include('../../mixins/sort') %>
+      <%- include('../../mixins/pagination') %>
+        <%- include('../../mixins/search') %>
+          <%- include('../../mixins/moment') %>
+
+            <%- block('main') %>
+              <% if (role.permissions.includes('products_view')) { %>
+                <div class="row">
+                  <div class="col-4">
+                    <%- include('../../mixins/filter-status') %>
+                  </div>
+                  <div class="col-4">
+                    <div class="card">
+                      <%- include('../../mixins/sort') %>
+                    </div>
+                  </div>
+                  <div class="col-4">
+                    <%- include('../../mixins/search', { objSearch: objSearch }) %>
+                  </div>
+                </div>
+
+                <div class="row m-3">
+                  <div class="col-6">
+                    <% if (role.permissions.includes('products_edit')) { %>
+                      <div class="card">
+                        <div class="card-body">
+                          <form action="<%= `${prefixAdmin}/products/change-multi?_method=patch` %>" method="post"
+                            class="row" form-change-multi>
+                            <select class="custom-select col-7" name="action">
+                              <option selected disabled value="">Chọn hành động...</option>
+                              <option value="active">Hoạt động</option>
+                              <option value="inactive">Dừng hoạt động</option>
+                              <option value="delete">Xóa</option>
+                              <option value="position">Change position</option>
+                            </select>
+                            <input type="text" name="ids" value="" class="d-none">
+                            <div class="input-group-append col-5">
+                              <button class="btn btn-outline-secondary" type="submit">Áp dụng</button>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                      <% } %>
+                  </div>
+                </div>
+
+                <table class="table table-hover table-sm" checkbox-multi>
+                  <thead>
+                    <tr>
+                      <th>
+                        <input type="checkbox" name="checkAll">
+                      </th>
+                      <th>STT</th>
+                      <th>Hình ảnh</th>
+                      <th>Tiêu đề</th>
+                      <th>Giá</th>
+                      <th>Vị trí</th>
+                      <th>Trạng thái</th>
+                      <th>Xóa bởi</th>
+                      <th>Hành động</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% products.forEach((item, index)=> { %>
+                      <tr>
+                        <td>
+                          <input type="checkbox" name="checkboxItem" data-id="<%= item.id %>">
+                        </td>
+                        <td>
+                          <%= index + 1 %>
+                        </td>
+                        <td>
+                          <img src="<%= item.thumbnail %>" alt="<%= item.title %>" width="100px" height="auto">
+                        </td>
+                        <td>
+                          <h6>
+                            <%= item.title %>
+                          </h6>
+                        </td>
+                        <td>
+                          <%= item.price %>$
+                        </td>
+                        <td>
+                          <input name="position" value="<%= item.position %>" type="number" style="width: 60px;"
+                            min="1">
+                        </td>
+                        <td>
+                          <% if (role.permissions.includes('products_edit')) { %>
+                            <% if (item.status=='active' ) { %>
+                              <button data-id="<%= item.id %>" data-status="inactive" class="badge badge-success"
+                                button-change-status>Hoạt động</button>
+                              <% } else { %>
+                                <button data-id="<%= item.id %>" data-status="active" class="badge badge-danger"
+                                  button-change-status>Dừng hoạt động</button>
+                                <% } %>
+                                  <% } else { %>
+                                    <% if (item.status=='active' ) { %>
+                                      <button data-status="inactive" class="badge badge-success">Hoạt động</button>
+                                      <% } else { %>
+                                        <button data-status="active" class="badge badge-danger">Dừng hoạt động</button>
+                                        <% } %>
+                                          <% } %>
+                        </td>
+                        <td>
+                          <% if (item.deletedBy.creator) { %>
+                            <p>
+                              <%= item.deletedBy.creator %>
+                            </p>
+                            <%- formatDateTime(item.deletedBy.deletedAt) %>
+                              <% } %>
+                        </td>
+                        <td>
+                          <% if (role.permissions.includes('products_delete')) { %>
+                            <button class="btn btn-secondary btn-sm ml-1" button-restore
+                              data-id="<%= item.id %>">Restore</button>
+                            <% } %>
+                              <% if (role.permissions.includes('products_delete')) { %>
+                                <button class="btn btn-danger btn-sm ml-1" button-delete
+                                  data-id="<%= item.id %>">Xóa</button>
+                                <% } %>
+                                  <a href="<%= `${prefixAdmin}/products/detail/${item.id}` %>"
+                                    class="btn btn-info btn-sm ml-1">Chi tiết</a>
+                        </td>
+                      </tr>
+                      <% }); %>
+                  </tbody>
+                </table>
+
+                <%- include('../../mixins/pagination', { objPagination: objPagination }) %>
+
+                  <form action="<%= `${prefixAdmin}/recycles/products/delete` %>" method="post" form-delete-item></form>
+                  <form action="<%= `${prefixAdmin}/products/change-status` %>" method="post" form-change-status></form>
+                  <form action="<%= `${prefixAdmin}/recycles/products/restore` %>" method="post" form-restore></form>
+
+                  <script src="/admin/js/product.js"></script>
+                  <% } %>
+                    <%- endblock() %>

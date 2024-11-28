@@ -1,0 +1,245 @@
+<% function filterStatus() { %>
+  <div class="card bg-white shadow-md rounded-md">
+    <div class="card-body p-4" filter-status>
+      <div class="card-header text-lg font-semibold">Bộ lọc và Tìm Kiếm</div>
+      <select
+        class="form-select mt-3 bg-gray-100 rounded-md py-2 px-3 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        select-status>
+        <option value="all">Tất cả sản phẩm</option>
+        <option value="active">Sản phẩm hoạt động</option>
+        <option value="inactive">Sản phẩm dừng hoạt động</option>
+      </select>
+    </div>
+  </div>
+  <% } %>
+
+    <% function sort() { %>
+      <div class="card bg-white shadow-md rounded-md">
+        <div class="card-body p-4" sort>
+          <div class="card-header text-lg font-semibold">Sắp xếp</div>
+          <select
+            class="form-select mt-3 bg-gray-100 rounded-md py-2 px-3 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            select-sort>
+            <option value="position-desc">Vị trí giảm dần</option>
+            <option value="position-asc">Vị trí tăng dần</option>
+            <option value="price-desc">Giá giảm dần</option>
+            <option value="price-asc">Giá tăng dần</option>
+            <option value="title-asc">Tiêu đề A - Z</option>
+            <option value="title-desc">Tiêu đề Z - A</option>
+          </select>
+        </div>
+      </div>
+      <% } %>
+
+        <% function pagination(pagination) { %>
+          <nav class="mt-4">
+            <ul class="pagination flex list-style-none justify-center">
+              <% if (pagination.currentPage> 1) { %>
+                <li class="page-item mr-2">
+                  <button class="page-link bg-white border border-gray-300 rounded-md px-4 py-2 hover:bg-gray-100"
+                    button-pagination="1">
+                    Trang đầu
+                  </button>
+                </li>
+                <li class="page-item mr-2">
+                  <button class="page-link bg-white border border-gray-300 rounded-md px-4 py-2 hover:bg-gray-100"
+                    button-pagination="<%= pagination.currentPage - 1 %>">
+                    Trang trước
+                  </button>
+                </li>
+                <% } %>
+
+                  <% for (let i=1; i <=pagination.totalPage; i++) { %>
+                    <li class="page-item mr-2 <%= pagination.currentPage == i ? 'active' : '' %>">
+                      <button
+                        class="page-link <%= pagination.currentPage == i ? 'bg-blue-500 text-white' : 'bg-white border border-gray-300 hover:bg-gray-100' %> rounded-md px-4 py-2"
+                        button-pagination="<%= i %>">
+                        <%= i %>
+                      </button>
+                    </li>
+                    <% } %>
+
+                      <% if (pagination.currentPage < pagination.totalPage) { %>
+                        <li class="page-item mr-2">
+                          <button
+                            class="page-link bg-white border border-gray-300 rounded-md px-4 py-2 hover:bg-gray-100"
+                            button-pagination="<%= pagination.currentPage + 1 %>">
+                            Kế tiếp
+                          </button>
+                        </li>
+                        <li class="page-item">
+                          <button
+                            class="page-link bg-white border border-gray-300 rounded-md px-4 py-2 hover:bg-gray-100"
+                            button-pagination="<%= pagination.totalPage %>">
+                            Trang cuối
+                          </button>
+                        </li>
+                        <% } %>
+            </ul>
+          </nav>
+          <% } %>
+
+            <% function search(objSearch) { %>
+              <form form-search class="mb-4">
+                <div class="input-group">
+                  <input type="text" placeholder="Nhập từ khóa" name="keyword"
+                    class="form-control bg-gray-100 rounded-md py-2 px-3 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    value="<%= objSearch.keyword %>" />
+                  <button class="btn btn-success bg-blue-500 hover:bg-blue-600 text-white rounded-md px-4 py-2 ml-2"
+                    type="submit">
+                    Tìm
+                  </button>
+                </div>
+              </form>
+              <% } %>
+
+                <% function formatDateTime(time) { %>
+                  <p class="text-sm text-gray-500">
+                    <%= moment(time).format('DD/MM/YYYY, HH:mm:ss') %>
+                  </p>
+                  <% } %>
+
+                    <% function formatDate(time) { %>
+                      <p class="text-sm text-gray-500">
+                        <%= moment(time).format('DD/MM/YYYY') %>
+                      </p>
+                      <% } %>
+
+                        <% function formatTime(time) { %>
+                          <p class="text-sm text-gray-500">
+                            <%= moment(time).format('HH:mm:ss') %>
+                          </p>
+                          <% } %>
+                            <div class="grid grid-cols-3 gap-4 mb-4">
+                              <div>
+                                <%- filterStatus() %>
+                              </div>
+                              <div>
+                                <%- sort() %>
+                              </div>
+                              <div>
+                                <%- search(objSearch) %>
+                              </div>
+                            </div>
+
+                            <div class="grid grid-cols-4 gap-4 mb-4">
+                              <div class="col-span-3">
+                                <div class="card bg-white shadow-md rounded-md">
+                                  <div class="card-body p-4">
+                                    <form action="<%= prefixAdmin %>/products/change-multi?_method=patch" method="post"
+                                      class="row" form-change-multi>
+                                      <select
+                                        class="custom-select col-7 bg-gray-100 rounded-md py-2 px-3 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                        name="action">
+                                        <option selected disabled value="">Chọn hành động...</option>
+                                        <option value="active">Hoạt động</option>
+                                        <option value="inactive">Dừng hoạt động</option>
+                                        <option value="delete">Xóa</option>
+                                        <option value="position">Thay đổi vị trí</option>
+                                      </select>
+                                      <button
+                                        class="btn btn-outline-secondary border border-gray-300 rounded-md px-4 py-2 hover:bg-gray-100 ml-2"
+                                        type="submit">
+                                        Áp dụng
+                                      </button>
+                                    </form>
+                                  </div>
+                                </div>
+                              </div>
+                              <div>
+                                <div class="card bg-white shadow-md rounded-md">
+                                  <div class="card-body p-4">
+                                    <a type="button" href="<%= prefixAdmin %>/products/create"
+                                      class="btn btn-success bg-green-500 hover:bg-green-600 text-white rounded-md px-4 py-2">
+                                      Thêm mới
+                                    </a>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <table class=" table table-hover table-sm w-full" checkbox-multi>
+                              <thead>
+                                <tr>
+                                  <th class="px-4 py-2"><input type="checkbox" name="checkAll" /></th>
+                                  <th class="px-4 py-2">STT</th>
+                                  <th class="px-4 py-2">Hình ảnh</th>
+                                  <th class="px-4 py-2">Tiêu đề</th>
+                                  <th class="px-4 py-2">Giá</th>
+                                  <th class="px-4 py-2">Vị trí</th>
+                                  <th class="px-4 py-2">Trạng thái</th>
+                                  <th class="px-4 py-2">Tạo bởi</th>
+                                  <th class="px-4 py-2">Hành động</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <% products.forEach(function(item, index) { %>
+                                  <tr>
+                                    <td class="border px-4 py-2">
+                                      <input type="checkbox" name="checkboxItem" data-id="<%= item.id %>" />
+                                    </td>
+                                    <td class="border px-4 py-2">
+                                      <%= index + 1 %>
+                                    </td>
+                                    <td class="border px-4 py-2">
+                                      <img src="<%= item.thumbnail %>" alt="<%= item.title %>" width="100px"
+                                        height="auto" />
+                                    </td>
+                                    <td class="border px-4 py-2">
+                                      <h6 class="text-lg font-semibold text-gray-700 line-clamp-2 overflow-hidden">
+                                        <%= item.title %>
+                                      </h6>
+                                    </td>
+                                    <td class="border px-4 py-2">
+                                      <%= item.price %>$
+                                    </td>
+                                    <td class="border px-4 py-2">
+                                      <input type="number" name="position" value="<%= item.position %>"
+                                        style="width: 60px;" min="1" />
+                                    </td>
+                                    <td class="border px-4 py-2">
+                                      <% if (item.status==="active" ) { %>
+                                        <button class="badge badge-success bg-green-500 text-white rounded-md px-2 py-1"
+                                          data-id="<%= item.id %>" data-status="inactive">
+                                          Active
+                                        </button>
+                                        <% } else { %>
+                                          <button class="badge badge-danger bg-red-500 text-white rounded-md px-2 py-1"
+                                            data-id="<%= item.id %>" data-status="active">
+                                            Inactive
+                                          </button>
+                                          <% } %>
+                                    </td>
+                                    <td class="border px-4 py-2">
+                                      <% if (item.createdBy.fullName) { %>
+                                        <%- formatDateTime(item.createdBy.createdAt) %>
+                                          <% } %>
+                                    </td>
+                                    <td class="border px-4 py-2">
+                                      <a href="<%= prefixAdmin %>/products/edit/<%= item.id %>"
+                                        class="btn btn-warning bg-yellow-500 hover:bg-yellow-600 text-white rounded-md px-2 py-1 text-xs">
+                                        Edit
+                                      </a>
+                                      <button
+                                        class="btn btn-danger bg-red-500 hover:bg-red-600 text-white rounded-md px-2 py-1 text-xs ml-1"
+                                        data-id="<%= item.id %>" button-delete>
+                                        Xóa
+                                      </button>
+                                      <a href="<%= prefixAdmin %>/products/detail/<%= item.id %>"
+                                        class="btn btn-info bg-blue-500 hover:bg-blue-600 text-white rounded-md px-2 py-1 text-xs ml-1">
+                                        Chi tiết
+                                      </a>
+                                    </td>
+                                  </tr>
+                                  <% }); %>
+                              </tbody>
+                            </table>
+
+                            <%- pagination(objPagination) %>
+
+                              <form action="<%= prefixAdmin %>/products/delete" method="post" form-delete-item>
+                              </form>
+
+                              <form action="<%= prefixAdmin %>/products/change-status" method="post" form-change-status>
+                              </form>
+
+                              <script src="/admin/js/product.js"></script>

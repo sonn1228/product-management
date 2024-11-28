@@ -1,0 +1,78 @@
+<%- include('../../layouts/default.ejs') %>
+  <%- include('../../mixins/box-head.ejs') %>
+    <%- include('../../mixins/alert.ejs') %>
+
+      <%- alertSuccess() %>
+        <%- alertError() %>
+
+          <div class="product-detail">
+            <div class="container my-5">
+              <button class="btn btn-secondary" button-go-back>Go back</button>
+              <div class="row">
+                <div class="col-6">
+                  <div class="inner-thumb">
+                    <img src="<%= product.thumbnail %>" alt="<%= product.title %>">
+                  </div>
+                </div>
+                <div class="col-6">
+                  <h1 class="inner-title">
+                    <%= product.title %>
+                  </h1>
+
+                  <% if (product.category) { %>
+                    <div class="inner-category">
+                      <span>Danh mục: </span>
+                      <a href="/products/<%= product.category.slug %>">
+                        <%= product.category.title %>
+                      </a>
+                    </div>
+                    <% } %>
+
+                      <% if (product.priceNew) { %>
+                        <div class="inner-price-new">Price: <%= product.priceNew %>$</div>
+                        <% } %>
+
+                          <% if (product.price) { %>
+                            <div class="inner-price-old">Price: <%= product.price %>$</div>
+                            <% } %>
+
+                              <% if (product.discountPercentage) { %>
+                                <div class="inner-percent">
+                                  Giảm tới <span>
+                                    <%= product.discountPercentage %>%
+                                  </span>
+                                </div>
+                                <% } %>
+
+                                  <% if (product.stock) { %>
+                                    <div class="inner-stock">
+                                      Còn lại <span>
+                                        <%= product.stock %>
+                                      </span> sản phẩm
+                                    </div>
+                                    <% } %>
+
+                                      <form action="/cart/add/<%= product.id %>" method="POST">
+                                        <input class="form-control mb-2" type="number" name="quantity" value="1" min="1"
+                                          max="<%= product.stock %>">
+                                        <button type="submit" class="btn btn-success btn-block">
+                                          Thêm vào giỏ hàng
+                                        </button>
+                                      </form>
+                </div>
+              </div>
+
+              <hr>
+
+              <div class="container my-5">
+                <div class="row">
+                  <div class="col-12">
+                    <%- boxHead("Mô tả sản phẩm") %>
+                      <div class="inner-desc">
+                        <%- product.description %>
+                      </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>

@@ -1,0 +1,17 @@
+<% function alertSuccess(time=5000) { %>
+  <% if (messages && messages.success) { %>
+    <div class="alert alert-success" show-alert data-time="<%= time %>">
+      <%= messages.success %>
+        <button class="btn btn-danger btn-sm" close-alert>x</button>
+    </div>
+    <% } %>
+      <% } %>
+
+        <% function alertError(time=3000) { %>
+          <% if (messages && messages.error) { %>
+            <div class="alert alert-danger" show-alert data-time="<%= time %>">
+              <%= messages.error %>
+                <button class="btn btn-danger btn-sm" close-alert>x</button>
+            </div>
+            <% } %>
+              <% } %>

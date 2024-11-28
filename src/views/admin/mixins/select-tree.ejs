@@ -1,0 +1,11 @@
+<% function selectTree(records, level=1, current_id="" ) { records.forEach(item=> {
+  const prefix = "-- ".repeat(level);
+  %>
+  <option value="<%= item.id %>" <%=item.id==current_id ? "selected" : "" %>>
+    <%= prefix %>
+      <%= item.title %>
+  </option>
+  <% if (item.children && item.children.length> 0) {
+    selectTree(item.children, level + 1, current_id);
+    }
+    });
